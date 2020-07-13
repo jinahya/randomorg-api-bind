@@ -45,9 +45,10 @@
     <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
     <maven.compiler.testSource>${maven.compiler.source}</maven.compiler.testSource>
     <maven.compiler.testTarget>${maven.compiler.testSource}</maven.compiler.testTarget>
+    <version.com.fasterxml.jackson.core>2.11.1</version.com.fasterxml.jackson.core>
     <version.maven-javadoc-plugin>3.2.0</version.maven-javadoc-plugin>
     <version.maven-surefire>3.0.0-M4</version.maven-surefire>
-    <version.org.junit.jupiter>5.6.0</version.org.junit.jupiter>
+    <version.org.junit.jupiter>5.7.0-M1</version.org.junit.jupiter>
   </properties>
 
   <dependencies>
@@ -55,6 +56,12 @@
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <version>1.2.3</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${version.com.fasterxml.jackson.core}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -72,7 +79,7 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
-      <version>${version.oerg.junit.jupiter}</version>
+      <version>${version.org.junit.jupiter}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -91,7 +98,7 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.18.12</version>
-      <scope>provided</scope>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

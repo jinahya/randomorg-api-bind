@@ -20,10 +20,7 @@ package com.github.jinahya.randomorg.api.bind.r2.basic;
  * #L%
  */
 
-import lombok.Getter;
-
-@Getter
-public enum Base {
+enum Base {
 
     BINARY(2),
 
@@ -33,22 +30,30 @@ public enum Base {
 
     HEXADECIMAL(16);
 
-    public static Base valueOfBase(final int radix) {
+    public static Base valueOfRadix(final int radix) {
         for (final Base value : values()) {
             if (value.radix == radix) {
                 return value;
             }
         }
-        throw new IllegalArgumentException("no value for base: " + radix);
+        throw new IllegalArgumentException("no value for radix: " + radix);
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
     Base(final int radix) {
         this.radix = radix;
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
     public int parse(final String s) {
         return Integer.parseInt(s, radix);
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
+    int getRadix() {
+        return radix;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
     private final int radix;
 }

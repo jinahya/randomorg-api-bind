@@ -20,43 +20,78 @@ package com.github.jinahya.randomorg.api.bind.r2.basic;
  * #L%
  */
 
-import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
+import jakarta.validation.constraints.NotNull;
 
-@ToString
-@Setter
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@Slf4j
 public class GenerateIntegersParams {
 
     public static final int MIN_N = 1;
 
     public static final int MAX_N = (int) 1.0e4;
 
-    public static final int MIN_MIN = (int) -1.0e+9;
+    // ---------------------------------------------------------------------------------------------------------- apiKey
+    public String getApiKey() {
+        return apiKey;
+    }
 
-    public static final int MAX_MIN = (int) +1.0e+9;
+    public void setApiKey(final String apiKey) {
+        this.apiKey = apiKey;
+    }
 
-    public static final int MIN_MAX = MIN_MIN;
+    // --------------------------------------------------------------------------------------------------------------- n
+    public int getN() {
+        return n;
+    }
 
-    public static final int MAX_MAX = MAX_MIN;
+    public void setN(final int n) {
+        this.n = n;
+    }
+
+    // ------------------------------------------------------------------------------------------------------------- min
+    public int getMin() {
+        return unit.getMin();
+    }
+
+    public void setMin(final int min) {
+        unit().setMin(min);
+    }
+
+    // ------------------------------------------------------------------------------------------------------------- max
+    public int getMax() {
+        return unit.getMax();
+    }
+
+    public void setMax(final int max) {
+        unit().setMax(max);
+    }
+
+    // ----------------------------------------------------------------------------------------------------- replacement
+    public Boolean getReplacement() {
+        return unit().getReplacement();
+    }
+
+    public void setReplacement(final Boolean replacement) {
+        unit().setReplacement(replacement);
+    }
+
+    // ------------------------------------------------------------------------------------------------------------ base
+    public Integer getBase() {
+        return unit().getBase();
+    }
+
+    public void setBase(final Integer base) {
+        unit().setBase(base);
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @AssertTrue
-    private boolean isMinLessThanOrEqualsToMax() {
-        return min <= max;
+    private GenerateIntegersParamsUnit unit() {
+        if (unit == null) {
+            unit = new GenerateIntegersParamsUnit();
+        }
+        return unit;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -67,15 +102,7 @@ public class GenerateIntegersParams {
     @Min(MIN_N)
     private int n = MIN_N;
 
-    @Max(MAX_MIN)
-    @Min(MIN_MIN)
-    private int min = MIN_MIN;
-
-    @Max(MAX_MAX)
-    @Min(MIN_MAX)
-    private int max = MAX_MAX;
-
-    private Boolean replacement;
-
-    private Base base;
+    @Valid
+    @NotNull
+    private GenerateIntegersParamsUnit unit;
 }
