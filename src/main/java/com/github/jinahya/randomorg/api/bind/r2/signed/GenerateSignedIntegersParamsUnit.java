@@ -1,4 +1,4 @@
-package com.github.jinahya.randomorg.api.bind.r2.basic;
+package com.github.jinahya.randomorg.api.bind.r2.signed;
 
 /*-
  * #%L
@@ -20,25 +20,16 @@ package com.github.jinahya.randomorg.api.bind.r2.basic;
  * #L%
  */
 
-import com.github.jinahya.randomorg.api.bind.r2.AbstractResult;
-import com.github.jinahya.randomorg.api.bind.r2.AbstractResultRandom;
+import com.github.jinahya.randomorg.api.bind.r2.basic.GenerateIntegersParamsUnit;
+import lombok.Getter;
+import lombok.Setter;
 
-public class GenerateIntegersResult extends AbstractResult<GenerateIntegersResult.Random> {
+@Setter
+@Getter
+public class GenerateSignedIntegersParamsUnit extends GenerateIntegersParamsUnit {
 
-    public static class Random extends AbstractResultRandom<Integer> {
-
-        @Override
-        public String toString() {
-            return super.toString() + "{"
-                   + "}";
-        }
-    }
+    // -------------------------------------------------------------------------------------------------------- userData
 
     // -----------------------------------------------------------------------------------------------------------------
-
-    @Override
-    public String toString() {
-        return super.toString() + "{"
-               + "}";
-    }
+    private Object userData;
 }

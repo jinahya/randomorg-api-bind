@@ -20,6 +20,7 @@ package com.github.jinahya.randomorg.api.bind.r2.basic;
  * #L%
  */
 
+import com.github.jinahya.randomorg.api.bind.r2.Base;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;

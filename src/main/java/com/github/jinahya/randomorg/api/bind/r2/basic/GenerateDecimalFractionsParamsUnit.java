@@ -20,25 +20,25 @@ package com.github.jinahya.randomorg.api.bind.r2.basic;
  * #L%
  */
 
-import com.github.jinahya.randomorg.api.bind.r2.AbstractResult;
-import com.github.jinahya.randomorg.api.bind.r2.AbstractResultRandom;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import lombok.Getter;
+import lombok.Setter;
 
-public class GenerateIntegersResult extends AbstractResult<GenerateIntegersResult.Random> {
+import static com.github.jinahya.randomorg.api.bind.r2.basic.GenerateDecimalFractionsParams.MAX_DECIMAL_PLACES;
+import static com.github.jinahya.randomorg.api.bind.r2.basic.GenerateDecimalFractionsParams.MIN_DECIMAL_PLACES;
 
-    public static class Random extends AbstractResultRandom<Integer> {
+@Setter
+@Getter
+public class GenerateDecimalFractionsParamsUnit {
 
-        @Override
-        public String toString() {
-            return super.toString() + "{"
-                   + "}";
-        }
-    }
+    // --------------------------------------------------------------------------------------------------- decimalPlaces
+    // ----------------------------------------------------------------------------------------------------- replacement
 
     // -----------------------------------------------------------------------------------------------------------------
+    @Max(MAX_DECIMAL_PLACES)
+    @Min(MIN_DECIMAL_PLACES)
+    private int decimalPlaces = MIN_DECIMAL_PLACES;
 
-    @Override
-    public String toString() {
-        return super.toString() + "{"
-               + "}";
-    }
+    private Boolean replacement;
 }

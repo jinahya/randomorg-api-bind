@@ -23,18 +23,22 @@ package com.github.jinahya.randomorg.api.bind.r2.basic;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import lombok.Getter;
+import lombok.Setter;
 
-import static java.util.Optional.ofNullable;
+import static com.github.jinahya.randomorg.api.bind.r2.basic.GenerateIntegersParams.MAX_MAX;
+import static com.github.jinahya.randomorg.api.bind.r2.basic.GenerateIntegersParams.MAX_MIN;
+import static com.github.jinahya.randomorg.api.bind.r2.basic.GenerateIntegersParams.MIN_MAX;
+import static com.github.jinahya.randomorg.api.bind.r2.basic.GenerateIntegersParams.MIN_MIN;
 
+@Setter
+@Getter
 public class GenerateIntegersParamsUnit {
 
-    public static final int MIN_MIN = (int) -1.0e+9;
+    // -----------------------------------------------------------------------------------------------------------------
+    private static final int MIN_BASE = 10;
 
-    public static final int MAX_MIN = (int) +1.0e+9;
-
-    public static final int MIN_MAX = MIN_MIN;
-
-    public static final int MAX_MAX = MAX_MIN;
+    private static final int MAX_BASE = MIN_BASE;
 
     // -----------------------------------------------------------------------------------------------------------------
     @AssertTrue
@@ -42,39 +46,15 @@ public class GenerateIntegersParamsUnit {
         return min <= max;
     }
 
-    // -----------------------------------------------------------------------------------------------------------------
-    public int getMin() {
-        return min;
-    }
-
-    public void setMin(final int min) {
-        this.min = min;
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    public int getMax() {
-        return max;
-    }
-
-    public void setMax(final int max) {
-        this.max = max;
-    }
-
-    public Boolean getReplacement() {
-        return replacement;
-    }
-
-    public void setReplacement(final Boolean replacement) {
-        this.replacement = replacement;
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    public Integer getBase() {
-        return ofNullable(base).map(Base::getRadix).orElse(null);
-    }
-
+    // ------------------------------------------------------------------------------------------------------------- min
+    // ------------------------------------------------------------------------------------------------------------- max
+    // ----------------------------------------------------------------------------------------------------- replacement
+    // ------------------------------------------------------------------------------------------------------------ base
     public void setBase(final Integer base) {
-        this.base = ofNullable(base).map(Base::valueOfRadix).orElse(null);
+        if (base != null && (base < MIN_BASE || base > MAX_BASE)) {
+            throw new IllegalArgumentException("illegal base: " + base);
+        }
+        this.base = base;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -88,5 +68,7 @@ public class GenerateIntegersParamsUnit {
 
     private Boolean replacement;
 
-    private Base base;
+    @Max(MAX_BASE)
+    @Min(MIN_BASE)
+    private Integer base;
 }

@@ -1,4 +1,4 @@
-package com.github.jinahya.randomorg.api.bind.r2.basic;
+package com.github.jinahya.randomorg.api.bind.r2.signed;
 
 /*-
  * #%L
@@ -21,37 +21,34 @@ package com.github.jinahya.randomorg.api.bind.r2.basic;
  */
 
 import com.github.jinahya.randomorg.api.bind.r2.AbstractParams;
+import com.github.jinahya.randomorg.api.bind.r2.basic.GenerateIntegersParams;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Delegate;
 
 @Setter
 @Getter
-public class GenerateIntegersParams extends AbstractParams {
+public class GenerateSignedIntegersParams extends AbstractParams {
 
-    public static final int MIN_N = 1;
+    public static final int MIN_N = GenerateIntegersParams.MIN_N;
 
-    public static final int MAX_N = (int) 1.0e4;
+    public static final int MAX_N = GenerateIntegersParams.MAX_N;
 
-    public static final int MIN_MIN = (int) -1.0e+9;
-
-    public static final int MAX_MIN = (int) +1.0e+9;
-
-    public static final int MIN_MAX = MIN_MIN;
-
-    public static final int MAX_MAX = MAX_MIN;
+    // --------------------------------------------------------------------------------------------------------------- n
+    // ------------------------------------------------------------------------------------------------------------ unit
 
     // -----------------------------------------------------------------------------------------------------------------
     @Max(MAX_N)
     @Min(MIN_N)
     private int n = MIN_N;
 
-    @Delegate
     @Valid
-    @NotNull
-    private final GenerateIntegersParamsUnit unit = new GenerateIntegersParamsUnit();
+    @Delegate
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)
+    private final GenerateSignedIntegersParamsUnit unit = new GenerateSignedIntegersParamsUnit();
 }

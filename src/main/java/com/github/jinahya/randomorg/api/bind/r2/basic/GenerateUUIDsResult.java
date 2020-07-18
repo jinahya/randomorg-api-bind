@@ -22,19 +22,33 @@ package com.github.jinahya.randomorg.api.bind.r2.basic;
 
 import com.github.jinahya.randomorg.api.bind.r2.AbstractResult;
 import com.github.jinahya.randomorg.api.bind.r2.AbstractResultRandom;
+import lombok.Getter;
+import lombok.Setter;
 
-public class GenerateIntegersResult extends AbstractResult<GenerateIntegersResult.Random> {
+import java.util.List;
+import java.util.UUID;
 
-    public static class Random extends AbstractResultRandom<Integer> {
+import static java.util.Optional.ofNullable;
+import static java.util.stream.Collectors.toList;
+
+@Setter
+@Getter
+public class GenerateUUIDsResult extends AbstractResult<GenerateUUIDsResult.Random> {
+
+    @Setter
+    @Getter
+    public static class Random extends AbstractResultRandom<String> {
 
         @Override
         public String toString() {
             return super.toString() + "{"
                    + "}";
         }
-    }
 
-    // -----------------------------------------------------------------------------------------------------------------
+        public List<UUID> getDataAsUuids() {
+            return ofNullable(getData()).map(l -> l.stream().map(UUID::fromString).collect(toList())).orElse(null);
+        }
+    }
 
     @Override
     public String toString() {

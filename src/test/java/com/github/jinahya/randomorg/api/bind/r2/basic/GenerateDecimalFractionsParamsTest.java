@@ -29,23 +29,22 @@ import java.io.InputStream;
 
 import static com.github.jinahya.randomorg.api.bind.BeanValidationTests.requireValid;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Slf4j
-class GenerateIntegersParamsTest {
+class GenerateDecimalFractionsParamsTest {
 
     @Test
-    void read_generateIntegers_params_01() throws IOException {
-        try (InputStream resource = getClass().getResourceAsStream("generateIntegers_params_01.json")) {
-            final GenerateIntegersParams params = new ObjectMapper().readValue(resource, GenerateIntegersParams.class);
+    void read_generateDecimalFractions_params_01() throws IOException {
+        try (InputStream resource = getClass().getResourceAsStream("generateDecimalFractions_params_01.json")) {
+            final GenerateDecimalFractionsParams params
+                    = new ObjectMapper().readValue(resource, GenerateDecimalFractionsParams.class);
             log.debug("params: {}", params);
             requireValid(params);
             assertEquals("6b1e65b9-4186-45c2-8981-b77a9842c4f0", params.getApiKey());
-            assertEquals(6, params.getN());
-            assertEquals(1, params.getMin());
-            assertEquals(6, params.getMax());
-            assertEquals(true, params.getReplacement());
-            assertNull(params.getBase());
+            assertEquals(10, params.getN());
+            assertEquals(8, params.getDecimalPlaces());
+            assertTrue(params.getReplacement());
         }
     }
 }

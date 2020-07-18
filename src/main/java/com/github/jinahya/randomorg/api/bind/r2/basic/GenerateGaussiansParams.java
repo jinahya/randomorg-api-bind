@@ -25,25 +25,35 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Delegate;
 
+import java.math.BigDecimal;
+
 @Setter
 @Getter
-public class GenerateIntegersParams extends AbstractParams {
+public class GenerateGaussiansParams extends AbstractParams {
 
     public static final int MIN_N = 1;
 
     public static final int MAX_N = (int) 1.0e4;
 
-    public static final int MIN_MIN = (int) -1.0e+9;
+    // -----------------------------------------------------------------------------------------------------------------
+    public static final BigDecimal MIN_MEAN = BigDecimal.valueOf(-1000000.0d);
 
-    public static final int MAX_MIN = (int) +1.0e+9;
+    public static final BigDecimal MAX_MEAN = BigDecimal.valueOf(+1000000.0d);
 
-    public static final int MIN_MAX = MIN_MIN;
+    // -----------------------------------------------------------------------------------------------------------------
+    public static final BigDecimal MIN_STANDARD_DEVIATION = BigDecimal.valueOf(-1000000.0d);
 
-    public static final int MAX_MAX = MAX_MIN;
+    public static final BigDecimal MAX_STANDARD_DEVIATION = BigDecimal.valueOf(+1000000.0d);
+
+    // -----------------------------------------------------------------------------------------------------------------
+    public static final int MIN_SIGNIFICANT_DIGITS = 2;
+
+    public static final int MAX_SIGNIFICANT_DIGITS = 14;
 
     // -----------------------------------------------------------------------------------------------------------------
     @Max(MAX_N)
@@ -53,5 +63,7 @@ public class GenerateIntegersParams extends AbstractParams {
     @Delegate
     @Valid
     @NotNull
-    private final GenerateIntegersParamsUnit unit = new GenerateIntegersParamsUnit();
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)
+    private final GenerateGaussiansParamsUnit unit = new GenerateGaussiansParamsUnit();
 }

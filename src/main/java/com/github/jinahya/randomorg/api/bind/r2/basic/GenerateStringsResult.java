@@ -22,10 +22,16 @@ package com.github.jinahya.randomorg.api.bind.r2.basic;
 
 import com.github.jinahya.randomorg.api.bind.r2.AbstractResult;
 import com.github.jinahya.randomorg.api.bind.r2.AbstractResultRandom;
+import lombok.Getter;
+import lombok.Setter;
 
-public class GenerateIntegersResult extends AbstractResult<GenerateIntegersResult.Random> {
+@Setter
+@Getter
+public class GenerateStringsResult extends AbstractResult<GenerateStringsResult.Random> {
 
-    public static class Random extends AbstractResultRandom<Integer> {
+    @Setter
+    @Getter
+    public static class Random extends AbstractResultRandom<String> {
 
         @Override
         public String toString() {
@@ -33,8 +39,6 @@ public class GenerateIntegersResult extends AbstractResult<GenerateIntegersResul
                    + "}";
         }
     }
-
-    // -----------------------------------------------------------------------------------------------------------------
 
     @Override
     public String toString() {

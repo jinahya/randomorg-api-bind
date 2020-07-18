@@ -22,10 +22,18 @@ package com.github.jinahya.randomorg.api.bind.r2.basic;
 
 import com.github.jinahya.randomorg.api.bind.r2.AbstractResult;
 import com.github.jinahya.randomorg.api.bind.r2.AbstractResultRandom;
+import lombok.Getter;
+import lombok.Setter;
 
-public class GenerateIntegersResult extends AbstractResult<GenerateIntegersResult.Random> {
+import java.math.BigDecimal;
 
-    public static class Random extends AbstractResultRandom<Integer> {
+@Setter
+@Getter
+public class GenerateDecimalFractionsResult extends AbstractResult<GenerateDecimalFractionsResult.Random> {
+
+    @Setter
+    @Getter
+    public static class Random extends AbstractResultRandom<BigDecimal> {
 
         @Override
         public String toString() {
@@ -33,8 +41,6 @@ public class GenerateIntegersResult extends AbstractResult<GenerateIntegersResul
                    + "}";
         }
     }
-
-    // -----------------------------------------------------------------------------------------------------------------
 
     @Override
     public String toString() {

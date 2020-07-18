@@ -1,4 +1,4 @@
-package com.github.jinahya.randomorg.api.bind.r2.basic;
+package com.github.jinahya.randomorg.api.bind.r2;
 
 /*-
  * #%L
@@ -20,7 +20,8 @@ package com.github.jinahya.randomorg.api.bind.r2.basic;
  * #L%
  */
 
-enum Base {
+@Deprecated
+public enum Base {
 
     BINARY(2),
 
@@ -30,6 +31,7 @@ enum Base {
 
     HEXADECIMAL(16);
 
+    // -----------------------------------------------------------------------------------------------------------------
     public static Base valueOfRadix(final int radix) {
         for (final Base value : values()) {
             if (value.radix == radix) {
@@ -39,18 +41,25 @@ enum Base {
         throw new IllegalArgumentException("no value for radix: " + radix);
     }
 
+    public static Base valueOf(final int radix) {
+        return valueOfRadix(radix);
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
     Base(final int radix) {
         this.radix = radix;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    public int parse(final String s) {
-        return Integer.parseInt(s, radix);
+    public int parse(final Object e) {
+        if (e instanceof String) {
+            return Integer.parseInt((String) e, radix);
+        }
+        return (Integer) e;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    int getRadix() {
+    public int getRadix() {
         return radix;
     }
 

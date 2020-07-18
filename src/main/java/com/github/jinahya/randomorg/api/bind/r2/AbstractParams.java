@@ -1,4 +1,4 @@
-package com.github.jinahya.randomorg.api.bind.r2.basic;
+package com.github.jinahya.randomorg.api.bind.r2;
 
 /*-
  * #%L
@@ -20,25 +20,24 @@ package com.github.jinahya.randomorg.api.bind.r2.basic;
  * #L%
  */
 
-import com.github.jinahya.randomorg.api.bind.r2.AbstractResult;
-import com.github.jinahya.randomorg.api.bind.r2.AbstractResultRandom;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
-public class GenerateIntegersResult extends AbstractResult<GenerateIntegersResult.Random> {
-
-    public static class Random extends AbstractResultRandom<Integer> {
-
-        @Override
-        public String toString() {
-            return super.toString() + "{"
-                   + "}";
-        }
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
+@Setter
+@Getter
+public abstract class AbstractParams {
 
     @Override
     public String toString() {
         return super.toString() + "{"
+               + "apiKey=" + apiKey
                + "}";
     }
+
+    // ---------------------------------------------------------------------------------------------------------- apiKey
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @NotBlank
+    private String apiKey;
 }

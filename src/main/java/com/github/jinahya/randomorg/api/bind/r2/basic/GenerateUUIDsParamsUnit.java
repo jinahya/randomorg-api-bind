@@ -20,25 +20,11 @@ package com.github.jinahya.randomorg.api.bind.r2.basic;
  * #L%
  */
 
-import com.github.jinahya.randomorg.api.bind.r2.AbstractResult;
-import com.github.jinahya.randomorg.api.bind.r2.AbstractResultRandom;
+import lombok.Getter;
+import lombok.Setter;
 
-public class GenerateIntegersResult extends AbstractResult<GenerateIntegersResult.Random> {
+@Setter
+@Getter
+class GenerateUUIDsParamsUnit {
 
-    public static class Random extends AbstractResultRandom<Integer> {
-
-        @Override
-        public String toString() {
-            return super.toString() + "{"
-                   + "}";
-        }
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-
-    @Override
-    public String toString() {
-        return super.toString() + "{"
-               + "}";
-    }
 }

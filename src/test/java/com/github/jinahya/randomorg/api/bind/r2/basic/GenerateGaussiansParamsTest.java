@@ -21,31 +21,35 @@ package com.github.jinahya.randomorg.api.bind.r2.basic;
  */
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.jinahya.randomorg.api.bind.AbstractParamsTest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 
 import static com.github.jinahya.randomorg.api.bind.BeanValidationTests.requireValid;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 @Slf4j
-class GenerateIntegersParamsTest {
+class GenerateGaussiansParamsTest extends AbstractParamsTest<GenerateGaussiansParams> {
+
+    GenerateGaussiansParamsTest() {
+        super(GenerateGaussiansParams.class);
+    }
 
     @Test
-    void read_generateIntegers_params_01() throws IOException {
-        try (InputStream resource = getClass().getResourceAsStream("generateIntegers_params_01.json")) {
-            final GenerateIntegersParams params = new ObjectMapper().readValue(resource, GenerateIntegersParams.class);
+    void read_generateGaussians_params_01() throws IOException {
+        try (InputStream resource = getClass().getResourceAsStream("generateGaussians_params_01.json")) {
+            final GenerateGaussiansParams params
+                    = new ObjectMapper().readValue(resource, GenerateGaussiansParams.class);
             log.debug("params: {}", params);
             requireValid(params);
             assertEquals("6b1e65b9-4186-45c2-8981-b77a9842c4f0", params.getApiKey());
-            assertEquals(6, params.getN());
-            assertEquals(1, params.getMin());
-            assertEquals(6, params.getMax());
-            assertEquals(true, params.getReplacement());
-            assertNull(params.getBase());
+            assertEquals(BigDecimal.valueOf(0.0d), params.getMean());
+            assertEquals(BigDecimal.valueOf(1.0d), params.getStandardDeviation());
+            assertEquals(8, params.getSignificantDigits());
         }
     }
 }

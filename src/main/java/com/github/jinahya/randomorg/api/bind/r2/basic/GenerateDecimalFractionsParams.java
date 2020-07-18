@@ -25,25 +25,22 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Delegate;
 
 @Setter
 @Getter
-public class GenerateIntegersParams extends AbstractParams {
+public class GenerateDecimalFractionsParams extends AbstractParams {
 
     public static final int MIN_N = 1;
 
     public static final int MAX_N = (int) 1.0e4;
 
-    public static final int MIN_MIN = (int) -1.0e+9;
+    public static final int MIN_DECIMAL_PLACES = 1;
 
-    public static final int MAX_MIN = (int) +1.0e+9;
-
-    public static final int MIN_MAX = MIN_MIN;
-
-    public static final int MAX_MAX = MAX_MIN;
+    public static final int MAX_DECIMAL_PLACES = 14;
 
     // -----------------------------------------------------------------------------------------------------------------
     @Max(MAX_N)
@@ -53,5 +50,7 @@ public class GenerateIntegersParams extends AbstractParams {
     @Delegate
     @Valid
     @NotNull
-    private final GenerateIntegersParamsUnit unit = new GenerateIntegersParamsUnit();
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)
+    private final GenerateDecimalFractionsParamsUnit unit = new GenerateDecimalFractionsParamsUnit();
 }

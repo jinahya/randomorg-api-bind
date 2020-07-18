@@ -20,12 +20,15 @@ package com.github.jinahya.randomorg.api.bind.r2.basic;
  * #L%
  */
 
+import com.github.jinahya.randomorg.api.bind.r2.AbstractParams;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,19 +36,48 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toList;
 
-public class GenerateIntegerSequencesParams {
+@Setter
+@Getter
+public class GenerateIntegerSequencesParams extends AbstractParams {
 
     public static final int MIN_N = GenerateIntegersParams.MIN_N;
 
     public static final int MAX_N = 1000;
 
-    // ---------------------------------------------------------------------------------------------------------- apiKey
-    public String getApiKey() {
-        return apiKey;
+    public static GenerateIntegerSequencesParams newUniformInstance(final GenerateIntegerSequencesParamsUnit unit) {
+        requireNonNull(unit, "unit is null");
+        final GenerateIntegerSequencesParams instance = new GenerateIntegerSequencesParams();
+        instance.addUnit(unit);
+        return instance;
     }
 
-    public void setApiKey(final String apiKey) {
-        this.apiKey = apiKey;
+    public static GenerateIntegerSequencesParams newMultiformInstance(
+            final GenerateIntegerSequencesParamsUnit firstUnit, final GenerateIntegerSequencesParamsUnit secondUnit,
+            final GenerateIntegerSequencesParamsUnit... otherUnits) {
+        final GenerateIntegerSequencesParams instance = newUniformInstance(firstUnit);
+        if (secondUnit != null) {
+            instance.addUnit(secondUnit);
+            if (otherUnits != null) {
+                for (final GenerateIntegerSequencesParamsUnit otherUnit : otherUnits) {
+                    instance.addUnit(otherUnit);
+                }
+            }
+        }
+        return instance;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+    @Override
+    public String toString() {
+        return super.toString() + "{"
+               + "n=" + getN()
+               + ",length=" + getLength()
+               + ",min=" + getMin()
+               + ",max=" + getMax()
+               + ",replacement=" + getReplacement()
+               + ",base=" + getBase()
+               + "}";
     }
 
     // --------------------------------------------------------------------------------------------------------------- n
@@ -63,7 +95,7 @@ public class GenerateIntegerSequencesParams {
         this.n = n;
     }
 
-    // -----------------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------------- length
     public Object getLength() {
         if (units == null || units.isEmpty()) {
             throw new IllegalStateException("units are empty");
@@ -74,6 +106,24 @@ public class GenerateIntegerSequencesParams {
         return units.stream().map(GenerateIntegerSequencesParamsUnit::getLength).collect(toList());
     }
 
+    @SuppressWarnings({"unchecked"})
+    public void setLength(final Object length) {
+        requireNonNull(length, "length is null");
+        if (length instanceof Number) {
+            getUnitAt(((Number) length).intValue() - 1);
+            return;
+        }
+        if (length instanceof Iterable) {
+            int index = 0;
+            for (final Integer l : (Iterable<Integer>) length) {
+                getUnitAt(index++).setLength(l);
+            }
+            return;
+        }
+        throw new IllegalArgumentException("illegal length: " + length);
+    }
+
+    // ------------------------------------------------------------------------------------------------------------- min
     public Object getMin() {
         if (units == null || units.isEmpty()) {
             throw new IllegalStateException("units are empty");
@@ -84,6 +134,24 @@ public class GenerateIntegerSequencesParams {
         return units.stream().map(GenerateIntegerSequencesParamsUnit::getMin).collect(toList());
     }
 
+    @SuppressWarnings({"unchecked"})
+    public void setMin(final Object min) {
+        requireNonNull(min, "min is null");
+        if (min instanceof Number) {
+            getUnitAt(((Number) min).intValue() - 1);
+            return;
+        }
+        if (min instanceof Iterable) {
+            int index = 0;
+            for (final Integer e : (Iterable<Integer>) min) {
+                getUnitAt(index++).setMin(e);
+            }
+            return;
+        }
+        throw new IllegalArgumentException("illegal min: " + min);
+    }
+
+    // ------------------------------------------------------------------------------------------------------------- max
     public Object getMax() {
         if (units == null || units.isEmpty()) {
             throw new IllegalStateException("units are empty");
@@ -94,6 +162,24 @@ public class GenerateIntegerSequencesParams {
         return units.stream().map(GenerateIntegerSequencesParamsUnit::getMax).collect(toList());
     }
 
+    @SuppressWarnings({"unchecked"})
+    public void setMax(final Object max) {
+        requireNonNull(max, "max is null");
+        if (max instanceof Number) {
+            getUnitAt(((Number) max).intValue() - 1);
+            return;
+        }
+        if (max instanceof Iterable) {
+            int index = 0;
+            for (final Integer e : (Iterable<Integer>) max) {
+                getUnitAt(index++).setMax(e);
+            }
+            return;
+        }
+        throw new IllegalArgumentException("illegal max: " + max);
+    }
+
+    // ----------------------------------------------------------------------------------------------------- replacement
     public Object getReplacement() {
         if (units == null || units.isEmpty()) {
             throw new IllegalStateException("units are empty");
@@ -104,6 +190,24 @@ public class GenerateIntegerSequencesParams {
         return units.stream().map(GenerateIntegerSequencesParamsUnit::getReplacement).collect(toList());
     }
 
+    @SuppressWarnings({"unchecked"})
+    public void setReplacement(final Object replacement) {
+        requireNonNull(replacement, "replacement is null");
+        if (replacement instanceof Number) {
+            getUnitAt(((Number) replacement).intValue() - 1);
+            return;
+        }
+        if (replacement instanceof Iterable) {
+            int index = 0;
+            for (final Boolean e : (Iterable<Boolean>) replacement) {
+                getUnitAt(index++).setReplacement(e);
+            }
+            return;
+        }
+        throw new IllegalArgumentException("illegal replacement: " + replacement);
+    }
+
+    // ------------------------------------------------------------------------------------------------------------ base
     public Object getBase() {
         if (units == null || units.isEmpty()) {
             throw new IllegalStateException("units are empty");
@@ -114,14 +218,38 @@ public class GenerateIntegerSequencesParams {
         return units.stream().map(GenerateIntegerSequencesParamsUnit::getBase).collect(toList());
     }
 
+    @SuppressWarnings({"unchecked"})
+    public void setBase(final Object base) {
+        requireNonNull(base, "base is null");
+        if (base instanceof Number) {
+            getUnitAt(((Number) base).intValue() - 1);
+            return;
+        }
+        if (base instanceof Iterable) {
+            int index = 0;
+            for (final Integer e : (Iterable<Integer>) base) {
+                getUnitAt(index++).setBase(e);
+            }
+            return;
+        }
+        throw new IllegalArgumentException("illegal base: " + base);
+    }
+
     // ----------------------------------------------------------------------------------------------------------- units
-    public GenerateIntegerSequencesParams unit(final GenerateIntegerSequencesParamsUnit unit) {
+    public GenerateIntegerSequencesParams addUnit(final GenerateIntegerSequencesParamsUnit unit) {
         requireNonNull(unit, "unit is null");
-        units().add(unit);
+        getUnits().add(unit);
         return this;
     }
 
-    private List<GenerateIntegerSequencesParamsUnit> units() {
+    private GenerateIntegerSequencesParamsUnit getUnitAt(final int index) {
+        while (getUnits().size() <= index) {
+            addUnit(new GenerateIntegerSequencesParamsUnit());
+        }
+        return getUnits().get(index);
+    }
+
+    private List<GenerateIntegerSequencesParamsUnit> getUnits() {
         if (units == null) {
             units = new ArrayList<>();
         }
@@ -129,13 +257,14 @@ public class GenerateIntegerSequencesParams {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @NotBlank
-    private String apiKey;
-
     @Max(MAX_N)
     @Min(MIN_N)
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)
     private int n = MIN_N;
 
     @Size(min = MIN_N, max = MAX_N)
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)
     private List<@Valid @NotNull GenerateIntegerSequencesParamsUnit> units;
 }
