@@ -25,23 +25,43 @@ import com.github.jinahya.randomorg.api.bind.r2.AbstractResultRandom;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
+import java.util.List;
+
+import static java.util.Objects.requireNonNull;
+import static java.util.Optional.ofNullable;
+import static java.util.stream.Collectors.toList;
 
 @Setter
 @Getter
-public class GenerateDecimalFractionsResult extends AbstractResult<GenerateDecimalFractionsResult.Random> {
+public class GenerateBlobsResult extends AbstractResult<GenerateBlobsResult.Random> {
 
     @Setter
     @Getter
-    public static class Random extends AbstractResultRandom<BigDecimal> {
+    public static class Random extends AbstractResultRandom<String> {
 
         @Override
         public String toString() {
             return super.toString() + '{'
                    + '}';
         }
+
+        // -------------------------------------------------------------------------------------------------------- data
+        public List<byte[]> getDataAsDecodedBinaries(final GenerateBlobsParams.Format format) {
+            return ofNullable(getData())
+                    .map(l -> l.stream().map(format::decode).collect(toList()))
+                    .orElse(null);
+        }
+
+        public List<byte[]> getDataAsDecodedBinaries(final GenerateBlobsParams params) {
+            requireNonNull(params, "params is null");
+            return getDataAsDecodedBinaries(
+                    ofNullable(params.getFormatAsOneOfPredefined())
+                            .orElse(GenerateBlobsParams.Format.BASE64)
+            );
+        }
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
     @Override
     public String toString() {
         return super.toString() + '{'

@@ -70,14 +70,14 @@ public class GenerateIntegerSequencesParams extends AbstractParams {
 
     @Override
     public String toString() {
-        return super.toString() + "{"
+        return super.toString() + '{'
                + "n=" + getN()
                + ",length=" + getLength()
                + ",min=" + getMin()
                + ",max=" + getMax()
                + ",replacement=" + getReplacement()
                + ",base=" + getBase()
-               + "}";
+               + '}';
     }
 
     // --------------------------------------------------------------------------------------------------------------- n

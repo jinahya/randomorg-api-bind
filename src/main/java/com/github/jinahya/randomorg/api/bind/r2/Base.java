@@ -20,7 +20,6 @@ package com.github.jinahya.randomorg.api.bind.r2;
  * #L%
  */
 
-@Deprecated
 public enum Base {
 
     BINARY(2),
@@ -59,6 +58,12 @@ public enum Base {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * Returns the value of {@code radix} property of this constant.
+     *
+     * @return the value of {@code radix} property.
+     */
     public int getRadix() {
         return radix;
     }

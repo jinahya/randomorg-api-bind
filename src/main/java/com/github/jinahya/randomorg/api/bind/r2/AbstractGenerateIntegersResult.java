@@ -38,13 +38,13 @@ public abstract class AbstractGenerateIntegersResult<T> {
 
     @Override
     public String toString() {
-        return super.toString() + "{"
+        return super.toString() + '{'
                + "random=" + random
                + ",bitsUsed=" + bitsUsed
                + ",bitsLeft=" + bitsLeft
                + ",requestsLeft=" + requestsLeft
                + ",advisoryDelay=" + advisoryDelay
-               + "}";
+               + '}';
     }
 
     // --------------------------------------------------------------------------------------------------- advisoryDelay

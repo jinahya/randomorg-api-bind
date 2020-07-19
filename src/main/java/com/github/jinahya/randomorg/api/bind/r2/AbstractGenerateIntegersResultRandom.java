@@ -42,10 +42,10 @@ public abstract class AbstractGenerateIntegersResultRandom {
 
     @Override
     public String toString() {
-        return super.toString() + "{"
+        return super.toString() + '{'
                + "data=" + data
                + ",completionTime=" + completionTime
-               + "}";
+               + '}';
     }
 
     // -------------------------------------------------------------------------------------------------- completionTime

@@ -41,8 +41,8 @@ public class GenerateUUIDsResult extends AbstractResult<GenerateUUIDsResult.Rand
 
         @Override
         public String toString() {
-            return super.toString() + "{"
-                   + "}";
+            return super.toString() + '{'
+                   + '}';
         }
 
         public List<UUID> getDataAsUuids() {
@@ -52,7 +52,7 @@ public class GenerateUUIDsResult extends AbstractResult<GenerateUUIDsResult.Rand
 
     @Override
     public String toString() {
-        return super.toString() + "{"
-               + "}";
+        return super.toString() + '{'
+               + '}';
     }
 }

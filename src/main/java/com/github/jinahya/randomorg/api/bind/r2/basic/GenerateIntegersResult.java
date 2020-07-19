@@ -29,8 +29,8 @@ public class GenerateIntegersResult extends AbstractResult<GenerateIntegersResul
 
         @Override
         public String toString() {
-            return super.toString() + "{"
-                   + "}";
+            return super.toString() + '{'
+                   + '}';
         }
     }
 
@@ -38,7 +38,7 @@ public class GenerateIntegersResult extends AbstractResult<GenerateIntegersResul
 
     @Override
     public String toString() {
-        return super.toString() + "{"
-               + "}";
+        return super.toString() + '{'
+               + '}';
     }
 }

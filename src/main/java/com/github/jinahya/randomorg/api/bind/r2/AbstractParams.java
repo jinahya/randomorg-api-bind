@@ -28,16 +28,22 @@ import lombok.Setter;
 @Getter
 public abstract class AbstractParams {
 
+    private static final String PROPERTY_NAME_API_KEY = "apiKey";
+
     @Override
     public String toString() {
-        return super.toString() + "{"
-               + "apiKey=" + apiKey
-               + "}";
+        return super.toString() + '{'
+               + PROPERTY_NAME_API_KEY + '=' + apiKey
+               + '}';
     }
 
     // ---------------------------------------------------------------------------------------------------------- apiKey
 
     // -----------------------------------------------------------------------------------------------------------------
+    @com.owlike.genson.annotation.JsonProperty(PROPERTY_NAME_API_KEY)
+    @com.squareup.moshi.Json(name = PROPERTY_NAME_API_KEY)
+    @com.google.gson.annotations.SerializedName(PROPERTY_NAME_API_KEY)
+    @com.fasterxml.jackson.annotation.JsonProperty(PROPERTY_NAME_API_KEY)
     @NotBlank
     private String apiKey;
 }
