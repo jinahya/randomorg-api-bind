@@ -21,11 +21,12 @@ package com.github.jinahya.randomorg.api.bind.r2;
  */
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.beans.Transient;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.List;
@@ -59,27 +60,25 @@ public abstract class AbstractResultRandom<T> {
         return ofNullable(getCompletionTime()).map(formatter::parse).orElse(null);
     }
 
-    @com.owlike.genson.annotation.JsonIgnore
-    // TODO: Moshi
-    // TODO: Gson
     @com.fasterxml.jackson.annotation.JsonIgnore
+    @jakarta.json.bind.annotation.JsonbTransient
     @Transient
     public TemporalAccessor getCompletionTimeAsTemporalAccessor() {
         return getCompletionTimeAsTemporalAccessorParsedWith(COMPLETION_TIME_FORMATTER);
     }
 
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    @jakarta.json.bind.annotation.JsonbTransient
+    @Transient
+    public OffsetDateTime getCompletionTimeAsOffsetDateTime() {
+        return OffsetDateTime.from(getCompletionTimeAsTemporalAccessor());
+    }
+
     // -------------------------------------------------------------------------------------------------------------
-    @com.owlike.genson.annotation.JsonProperty(PROPERTY_NAME_DATA)
-    @com.squareup.moshi.Json(name = PROPERTY_NAME_DATA)
-    @com.google.gson.annotations.SerializedName(PROPERTY_NAME_DATA)
-    @com.fasterxml.jackson.annotation.JsonProperty(PROPERTY_NAME_DATA)
-    @NotEmpty
+    @NotNull
+    //@NotEmpty
     private List<T> data;
 
-    @com.owlike.genson.annotation.JsonProperty(PROPERTY_NAME_COMPLETION_TIME)
-    @com.squareup.moshi.Json(name = PROPERTY_NAME_COMPLETION_TIME)
-    @com.google.gson.annotations.SerializedName(PROPERTY_NAME_COMPLETION_TIME)
-    @com.fasterxml.jackson.annotation.JsonProperty(PROPERTY_NAME_COMPLETION_TIME)
     @NotBlank
     private String completionTime;
 }

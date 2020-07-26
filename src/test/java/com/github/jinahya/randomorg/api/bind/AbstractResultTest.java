@@ -30,12 +30,14 @@ import java.time.ZoneOffset;
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public abstract class AbstractResultTest<T extends AbstractResult<U>, U extends AbstractResultRandom<V>, V> {
+public abstract class AbstractResultTest<T extends AbstractResult<U>, U extends AbstractResultRandom<V>, V>
+        extends AbstractTest {
 
+    // -----------------------------------------------------------------------------------------------------------------
     protected static void assertCompletionTimeEquals(final OffsetDateTime expected,
                                                      final AbstractResultRandom<?> random) {
-        final OffsetDateTime completionTime = OffsetDateTime.from(random.getCompletionTimeAsTemporalAccessor());
-        assertEquals(expected, completionTime);
+        final OffsetDateTime actual = random.getCompletionTimeAsOffsetDateTime();
+        assertEquals(expected, actual);
     }
 
     protected static void assertCompletionTimeEquals(
@@ -45,6 +47,7 @@ public abstract class AbstractResultTest<T extends AbstractResult<U>, U extends 
                 LocalDateTime.of(year, month, dayOfMonth, hour, minute, second).atOffset(ZoneOffset.UTC), random);
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
     protected AbstractResultTest(final Class<T> resultClass, final Class<U> randomClass, final Class<V> elementClass) {
         super();
         this.resultClass = requireNonNull(resultClass, "resultClass is null");
@@ -52,6 +55,7 @@ public abstract class AbstractResultTest<T extends AbstractResult<U>, U extends 
         this.elementClass = requireNonNull(elementClass, "elementClass is null");
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
     protected final Class<T> resultClass;
 
     protected final Class<U> randomClass;

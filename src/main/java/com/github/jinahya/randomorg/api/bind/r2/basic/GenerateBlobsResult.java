@@ -47,17 +47,10 @@ public class GenerateBlobsResult extends AbstractResult<GenerateBlobsResult.Rand
 
         // -------------------------------------------------------------------------------------------------------- data
         public List<byte[]> getDataAsDecodedBinaries(final GenerateBlobsParams.Format format) {
+            requireNonNull(format, "format is null");
             return ofNullable(getData())
                     .map(l -> l.stream().map(format::decode).collect(toList()))
                     .orElse(null);
-        }
-
-        public List<byte[]> getDataAsDecodedBinaries(final GenerateBlobsParams params) {
-            requireNonNull(params, "params is null");
-            return getDataAsDecodedBinaries(
-                    ofNullable(params.getFormatAsOneOfPredefined())
-                            .orElse(GenerateBlobsParams.Format.BASE64)
-            );
         }
     }
 

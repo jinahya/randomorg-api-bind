@@ -74,11 +74,11 @@ public class GenerateBlobsParams extends AbstractParams {
                     throw new IllegalArgumentException("wrong encoded.length(" + encoded.length() + ")");
                 }
                 final int length = encoded.length();
-                byte[] decoded = new byte[length >> 1];
+                final byte[] decoded = new byte[length >> 1];
                 int j = 0;
                 for (int i = 0; i < length; i += 2) {
                     decoded[j++] = (byte) ((Character.digit(encoded.charAt(i), 16) << 4)
-                                           + Character.digit(encoded.charAt(i + 1), 16));
+                                           | Character.digit(encoded.charAt(i + 1), 16));
                 }
                 return decoded;
             }
@@ -104,7 +104,7 @@ public class GenerateBlobsParams extends AbstractParams {
 
     // --------------------------------------------------------------------------------------------------------------- n
     // ------------------------------------------------------------------------------------------------------------ size
-    @com.owlike.genson.annotation.JsonIgnore
+    @com.fasterxml.jackson.annotation.JsonIgnore
     @jakarta.json.bind.annotation.JsonbTransient
     @Transient
     public int getSizeInBytes() {
@@ -119,15 +119,15 @@ public class GenerateBlobsParams extends AbstractParams {
     }
 
     // ---------------------------------------------------------------------------------------------------------- format
-    @com.owlike.genson.annotation.JsonIgnore
+    @com.fasterxml.jackson.annotation.JsonIgnore
     @jakarta.json.bind.annotation.JsonbTransient
     @Transient
     public Format getFormatAsOneOfPredefined() {
-        return ofNullable(getFormat()).map(String::toUpperCase).map(Format::valueOf).orElse(null);
+        return ofNullable(getFormat()).map(Format::valueOfJsonValue).orElse(null);
     }
 
     public void setFormatAsOneOfPredefined(final Format formatAsEnum) {
-        setFormat(ofNullable(formatAsEnum).map(Enum::name).map(String::toLowerCase).orElse(null));
+        setFormat(ofNullable(formatAsEnum).map(Format::getJsonValue).orElse(null));
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -135,8 +135,8 @@ public class GenerateBlobsParams extends AbstractParams {
     @Min(MIN_N)
     private int n = MIN_N;
 
-    @Max(GenerateBlobsParams.MAX_SIZE)
-    @Min(GenerateBlobsParams.MIN_SIZE)
+    @Max(MAX_SIZE)
+    @Min(MIN_SIZE)
     private int size = Byte.SIZE;
 
     @Pattern(regexp = PATTERN_REGEXP_FORMAT)

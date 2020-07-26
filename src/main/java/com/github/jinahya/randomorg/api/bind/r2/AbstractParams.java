@@ -40,10 +40,6 @@ public abstract class AbstractParams {
     // ---------------------------------------------------------------------------------------------------------- apiKey
 
     // -----------------------------------------------------------------------------------------------------------------
-    @com.owlike.genson.annotation.JsonProperty(PROPERTY_NAME_API_KEY)
-    @com.squareup.moshi.Json(name = PROPERTY_NAME_API_KEY)
-    @com.google.gson.annotations.SerializedName(PROPERTY_NAME_API_KEY)
-    @com.fasterxml.jackson.annotation.JsonProperty(PROPERTY_NAME_API_KEY)
     @NotBlank
     private String apiKey;
 }

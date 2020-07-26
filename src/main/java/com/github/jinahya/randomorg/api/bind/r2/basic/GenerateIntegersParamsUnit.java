@@ -36,11 +36,6 @@ import static com.github.jinahya.randomorg.api.bind.r2.basic.GenerateIntegersPar
 public class GenerateIntegersParamsUnit {
 
     // -----------------------------------------------------------------------------------------------------------------
-    private static final int MIN_BASE = 10;
-
-    private static final int MAX_BASE = MIN_BASE;
-
-    // -----------------------------------------------------------------------------------------------------------------
     @AssertTrue
     private boolean isMinLessThanOrEqualsToMax() {
         return min <= max;
@@ -50,12 +45,12 @@ public class GenerateIntegersParamsUnit {
     // ------------------------------------------------------------------------------------------------------------- max
     // ----------------------------------------------------------------------------------------------------- replacement
     // ------------------------------------------------------------------------------------------------------------ base
-    public void setBase(final Integer base) {
-        if (base != null && (base < MIN_BASE || base > MAX_BASE)) {
-            throw new IllegalArgumentException("illegal base: " + base);
-        }
-        this.base = base;
-    }
+//    public void setBase(final Integer base) {
+//        if (base != null && (base < MIN_BASE || base > MAX_BASE)) {
+//            throw new IllegalArgumentException("illegal base: " + base);
+//        }
+//        this.base = base;
+//    }
 
     // -----------------------------------------------------------------------------------------------------------------
     @Max(MAX_MIN)
@@ -68,7 +63,7 @@ public class GenerateIntegersParamsUnit {
 
     private Boolean replacement;
 
-    @Max(MAX_BASE)
-    @Min(MIN_BASE)
-    private Integer base;
+//    @Max(MAX_BASE)
+//    @Min(MIN_BASE)
+//    private Integer base;
 }

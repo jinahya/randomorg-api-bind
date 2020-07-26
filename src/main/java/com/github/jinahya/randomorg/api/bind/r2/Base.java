@@ -26,7 +26,12 @@ public enum Base {
 
     OCTAL(8),
 
-    DECIMAL(10),
+    DECIMAL(10) {
+        @Override
+        public int parse(final Object e) {
+            return ((Number) e).intValue();
+        }
+    },
 
     HEXADECIMAL(16);
 
@@ -40,10 +45,6 @@ public enum Base {
         throw new IllegalArgumentException("no value for radix: " + radix);
     }
 
-    public static Base valueOf(final int radix) {
-        return valueOfRadix(radix);
-    }
-
     // -----------------------------------------------------------------------------------------------------------------
     Base(final int radix) {
         this.radix = radix;
@@ -51,10 +52,7 @@ public enum Base {
 
     // -----------------------------------------------------------------------------------------------------------------
     public int parse(final Object e) {
-        if (e instanceof String) {
-            return Integer.parseInt((String) e, radix);
-        }
-        return (Integer) e;
+        return Integer.parseInt((String) e, radix);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

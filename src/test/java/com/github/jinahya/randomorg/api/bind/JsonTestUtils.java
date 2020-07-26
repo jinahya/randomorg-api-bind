@@ -22,15 +22,10 @@ package com.github.jinahya.randomorg.api.bind;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.owlike.genson.Genson;
-import com.squareup.moshi.Moshi;
 import jakarta.json.bind.JsonbBuilder;
-import okio.Okio;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 public class JsonTestUtils {
 
@@ -43,36 +38,40 @@ public class JsonTestUtils {
         return new ObjectMapper().readValue(stream, clazz);
     }
 
-    public static <T> T readGson(final InputStream stream, final Class<T> clazz) {
-        return new Gson().fromJson(new InputStreamReader(stream), clazz);
-    }
+//    public static <T> T readGson(final InputStream stream, final Class<T> clazz) {
+//        return new Gson().fromJson(new InputStreamReader(stream), clazz);
+//    }
 
-    public static <T> T readMoshi(final InputStream stream, final Class<T> clazz) throws IOException {
-        return new Moshi.Builder().build().adapter(clazz).fromJson(Okio.buffer(Okio.source(stream)));
-    }
+//    public static <T> T readMoshi(final InputStream stream, final Class<T> clazz) throws IOException {
+//        return new Moshi.Builder().build().adapter(clazz).fromJson(Okio.buffer(Okio.source(stream)));
+//    }
 
-    public static <T> T readGenson(final InputStream stream, final Class<T> clazz) {
-        return new Genson().deserialize(stream, clazz);
-    }
+//    public static <T> T readGenson(final InputStream stream, final Class<T> clazz) {
+//        return new Genson().deserialize(stream, clazz);
+//    }
 
     // -----------------------------------------------------------------------------------------------------------------
     public static String writeJsonb(final Object value) {
         return JsonbBuilder.create().toJson(value);
     }
 
-    public static String writeJackson(final Object value) throws JsonProcessingException {
-        return new ObjectMapper().writeValueAsString(value);
+    public static String writeJackson(final Object value) {
+        try {
+            return new ObjectMapper().writeValueAsString(value);
+        } catch (final JsonProcessingException jpe) {
+            throw new RuntimeException(jpe);
+        }
     }
 
-    public static String writeGson(final Object value) {
-        return new Gson().toJson(value);
-    }
+//    public static String writeGson(final Object value) {
+//        return new Gson().toJson(value);
+//    }
 
-    public static <T> String writeMoshi(final Class<T> clazz, final T value) {
-        return new Moshi.Builder().build().adapter(clazz).toJson(value);
-    }
+//    public static <T> String writeMoshi(final Class<T> clazz, final T value) {
+//        return new Moshi.Builder().build().adapter(clazz).toJson(value);
+//    }
 
-    public static String writeGenson(final Object value) {
-        return new Genson().serialize(value);
-    }
+//    public static String writeGenson(final Object value) {
+//        return new Genson().serialize(value);
+//    }
 }

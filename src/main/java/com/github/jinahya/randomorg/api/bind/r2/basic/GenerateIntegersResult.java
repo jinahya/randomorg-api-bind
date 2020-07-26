@@ -22,15 +22,29 @@ package com.github.jinahya.randomorg.api.bind.r2.basic;
 
 import com.github.jinahya.randomorg.api.bind.r2.AbstractResult;
 import com.github.jinahya.randomorg.api.bind.r2.AbstractResultRandom;
+import com.github.jinahya.randomorg.api.bind.r2.Base;
+
+import java.util.List;
+
+import static java.util.Objects.requireNonNull;
+import static java.util.Optional.ofNullable;
+import static java.util.stream.Collectors.toList;
 
 public class GenerateIntegersResult extends AbstractResult<GenerateIntegersResult.Random> {
 
-    public static class Random extends AbstractResultRandom<Integer> {
+    public static class Random extends AbstractResultRandom<Object> {
 
         @Override
         public String toString() {
             return super.toString() + '{'
                    + '}';
+        }
+
+        public List<Integer> getDataAsIntegers(final Base base) {
+            requireNonNull(base, "base is null");
+            return ofNullable(getData())
+                    .map(l -> l.stream().map(base::parse).collect(toList()))
+                    .orElse(null);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.github.jinahya.randomorg.api.bind;
+package com.github.jinahya.randomorg.api.bind.r2.basic;
 
 /*-
  * #%L
@@ -9,9 +9,9 @@ package com.github.jinahya.randomorg.api.bind;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,16 +20,16 @@ package com.github.jinahya.randomorg.api.bind;
  * #L%
  */
 
-import com.github.jinahya.randomorg.api.bind.r2.AbstractParams;
+import com.github.jinahya.randomorg.api.bind.AbstractResultTest;
 
-import static java.util.Objects.requireNonNull;
+import java.util.List;
 
-public abstract class AbstractParamsTest<T extends AbstractParams> extends AbstractTest {
+class GenerateIntegerSequenceResultTest
+        extends AbstractResultTest<GenerateIntegerSequencesResult, GenerateIntegerSequencesResult.Random, List<Object>> {
 
-    protected AbstractParamsTest(final Class<T> paramsClass) {
-        super();
-        this.paramsClass = requireNonNull(paramsClass, "paramsClass is null");
+    @SuppressWarnings({"unchecked"})
+    GenerateIntegerSequenceResultTest() {
+        super(GenerateIntegerSequencesResult.class, GenerateIntegerSequencesResult.Random.class,
+              (Class<List<Object>>) (Class<?>) List.class);
     }
-
-    protected final Class<T> paramsClass;
 }

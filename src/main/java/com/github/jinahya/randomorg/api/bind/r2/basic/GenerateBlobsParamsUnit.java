@@ -69,10 +69,8 @@ class GenerateBlobsParamsUnit {
     }
 
     // ------------------------------------------------------------------------------------------------------------ size
-    @com.owlike.genson.annotation.JsonIgnore
-    // TODO: Moshi
-    // TODO: Gson
     @com.fasterxml.jackson.annotation.JsonIgnore
+    @jakarta.json.bind.annotation.JsonbTransient
     @Transient
     public int getSizeInBytes() {
         return getSize() >> 3;
@@ -86,10 +84,8 @@ class GenerateBlobsParamsUnit {
     }
 
     // ---------------------------------------------------------------------------------------------------------- format
-    @com.owlike.genson.annotation.JsonIgnore
-    // TODO: Moshi
-    // TODO: Gson
     @com.fasterxml.jackson.annotation.JsonIgnore
+    @jakarta.json.bind.annotation.JsonbTransient
     @Transient
     public GenerateBlobsParams.Format getFormatAsOneOfPredefined() {
         return ofNullable(getFormat()).map(String::toUpperCase).map(GenerateBlobsParams.Format::valueOf).orElse(null);
@@ -100,18 +96,10 @@ class GenerateBlobsParamsUnit {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-//    @com.owlike.genson.annotation.JsonProperty(PROPERTY_NAME_SIZE)
-//    @com.squareup.moshi.Json(name = PROPERTY_NAME_SIZE)
-//    @com.google.gson.annotations.SerializedName(PROPERTY_NAME_SIZE)
-//    @com.fasterxml.jackson.annotation.JsonProperty(PROPERTY_NAME_SIZE)
     @Max(GenerateBlobsParams.MAX_SIZE)
     @Min(GenerateBlobsParams.MIN_SIZE)
     private int size = Byte.SIZE;
 
-    //    @com.owlike.genson.annotation.JsonProperty(PROPERTY_NAME_FORMAT)
-//    @com.squareup.moshi.Json(name = PROPERTY_NAME_FORMAT)
-//    @com.google.gson.annotations.SerializedName(PROPERTY_NAME_FORMAT)
-//    @com.fasterxml.jackson.annotation.JsonProperty(PROPERTY_NAME_FORMAT)
     @Pattern(regexp = "(base64|hex)")
     private String format = GenerateBlobsParams.Format.BASE64.getJsonValue();
 }

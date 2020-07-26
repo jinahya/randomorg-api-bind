@@ -20,26 +20,99 @@ package com.github.jinahya.randomorg.api.bind.r2.basic;
  * #L%
  */
 
+import com.github.jinahya.randomorg.api.bind.r2.Base;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public class GenerateIntegerSequencesParamsUnit extends GenerateIntegersParamsUnit {
+import java.beans.Transient;
 
-    public static final int MIN_LENGTH = 1;
+import static com.github.jinahya.randomorg.api.bind.r2.basic.GenerateIntegerSequencesParams.MAX_BASE;
+import static com.github.jinahya.randomorg.api.bind.r2.basic.GenerateIntegerSequencesParams.MAX_LENGTH;
+import static com.github.jinahya.randomorg.api.bind.r2.basic.GenerateIntegerSequencesParams.MAX_MAX;
+import static com.github.jinahya.randomorg.api.bind.r2.basic.GenerateIntegerSequencesParams.MAX_MIN;
+import static com.github.jinahya.randomorg.api.bind.r2.basic.GenerateIntegerSequencesParams.MIN_BASE;
+import static com.github.jinahya.randomorg.api.bind.r2.basic.GenerateIntegerSequencesParams.MIN_LENGTH;
+import static com.github.jinahya.randomorg.api.bind.r2.basic.GenerateIntegerSequencesParams.MIN_MAX;
+import static com.github.jinahya.randomorg.api.bind.r2.basic.GenerateIntegerSequencesParams.MIN_MIN;
+import static java.util.Optional.ofNullable;
 
-    public static final int MAX_LENGTH = 10000;
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class GenerateIntegerSequencesParamsUnit {
 
-    // -----------------------------------------------------------------------------------------------------------------
-    public int getLength() {
-        return length;
+    @Override
+    public String toString() {
+        return super.toString() + '{'
+               + "length=" + length
+               + ",min=" + min
+               + ",max=" + max
+               + ",replacement=" + replacement
+               + ",base=" + base
+               + '}';
     }
 
-    public void setLength(final int length) {
-        this.length = length;
+    // -----------------------------------------------------------------------------------------------------------------
+    @AssertTrue
+    private boolean isMinLessThanOrEqualsToMax() {
+        return min <= max;
+    }
+
+    @AssertTrue
+    private boolean isBaseOneOfPredefined() {
+        if (base == null) {
+            return true;
+        }
+        try {
+            Base.valueOfRadix(base);
+            return true;
+        } catch (final IllegalArgumentException iae) {
+            // suppressed
+        }
+        return false;
+    }
+
+    // --------------------------------------------------------------------------------------------------------------- n
+    // ------------------------------------------------------------------------------------------------------------- min
+    // ------------------------------------------------------------------------------------------------------------- max
+    // ----------------------------------------------------------------------------------------------------- replacement
+    // ------------------------------------------------------------------------------------------------------------ base
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    @jakarta.json.bind.annotation.JsonbTransient
+    @Transient
+    public Base getBaseAsOneOfPredefined() {
+        return ofNullable(getBase()).map(Base::valueOfRadix).orElse(null);
+    }
+
+    public void setBaseAsOneOfPredefined(final Base baseAsOneOfPredefined) {
+        setBase(ofNullable(baseAsOneOfPredefined).map(Base::getRadix).orElse(null));
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     @Max(MAX_LENGTH)
     @Min(MIN_LENGTH)
     private int length;
+
+    @Max(MAX_MIN)
+    @Min(MIN_MIN)
+    private int min;
+
+    @Max(MAX_MAX)
+    @Min(MIN_MAX)
+    private int max;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    private Boolean replacement;
+
+    @Max(MAX_BASE)
+    @Min(MIN_BASE)
+    private Integer base;
 }

@@ -20,125 +20,33 @@ package com.github.jinahya.randomorg.api.bind.r2.basic;
  * #L%
  */
 
+import com.github.jinahya.randomorg.api.bind.r2.AbstractResult;
+import com.github.jinahya.randomorg.api.bind.r2.AbstractResultRandom;
 import com.github.jinahya.randomorg.api.bind.r2.Base;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
 
-import java.time.Instant;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.util.List;
 import java.util.function.IntFunction;
 import java.util.stream.IntStream;
 
-import static java.util.Objects.requireNonNull;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 
-public class GenerateIntegerSequencesResult {
+public class GenerateIntegerSequencesResult extends AbstractResult<GenerateIntegerSequencesResult.Random> {
 
-    public static class Random {
+    public static class Random extends AbstractResultRandom<List<Object>> {
 
-        // -----------------------------------------------------------------------------------------------------------------
-
-        public List<List<Object>> getData() {
-            return data;
-        }
-
-        public void setData(final List<List<Object>> data) {
-            this.data = data;
-        }
-
-        public List<List<Integer>> getDataAsInteger(final IntFunction<Integer> radixFunction) {
-            if (data == null) {
-                return null;
-            }
-            return IntStream.range(0, data.size())
-                    .mapToObj(i -> {
-                        final List<Object> l = data.get(i);
-                        final Base b = ofNullable(radixFunction.apply(i)).map(Base::valueOfRadix).orElse(null);
-                        return l.stream().map(e -> b == null ? (Integer) e : b.parse((String) e)).collect(toList());
-                    })
-                    .collect(toList());
-        }
-
-        // -----------------------------------------------------------------------------------------------------------------
-        public String getCompletionTime() {
-            return completionTime;
-        }
-
-        public void setCompletionTime(String completionTime) {
-            this.completionTime = completionTime;
-        }
-
-        public TemporalAccessor getCompletionTimeParsedWith(final DateTimeFormatter formatter) {
-            requireNonNull(formatter, "formatter is null");
-            if (completionTime == null) {
-                return null;
-            }
-            return formatter.parse(completionTime);
-        }
-
-        public Instant getCompletionTimeAsInstant() {
-            return Instant.from(getCompletionTimeParsedWith(DateTimeFormatter.ISO_INSTANT));
-        }
-
-        // -------------------------------------------------------------------------------------------------------------
-        @NotEmpty
-        private List<List<Object>> data;
-
-        @NotBlank
-        private String completionTime;
+//        public List<List<Integer>> getDataAsIntegerSequences(final Base base) {
+//            return ofNullable(getData())
+//            if (data == null) {
+//                return null;
+//            }
+//            return IntStream.range(0, data.size())
+//                    .mapToObj(i -> {
+//                        final List<Object> l = data.get(i);
+//                        final Base b = ofNullable(radixFunction.apply(i)).map(Base::valueOfRadix).orElse(null);
+//                        return l.stream().map(e -> b == null ? (Integer) e : b.parse((String) e)).collect(toList());
+//                    })
+//                    .collect(toList());
+//        }
     }
-
-    // -------------------------------------------------------------------------------------------------------- bitsUsed
-    public int getBitsUsed() {
-        return bitsUsed;
-    }
-
-    public void setBitsUsed(final int bitsUsed) {
-        this.bitsUsed = bitsUsed;
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    public int getBitsLeft() {
-        return bitsLeft;
-    }
-
-    public void setBitsLeft(int bitsLeft) {
-        this.bitsLeft = bitsLeft;
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    public int getRequestsLeft() {
-        return requestsLeft;
-    }
-
-    public void setRequestsLeft(final int requestsLeft) {
-        this.requestsLeft = requestsLeft;
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    public long getAdvisoryDelay() {
-        return advisoryDelay;
-    }
-
-    public void setAdvisoryDelay(final long advisoryDelay) {
-        this.advisoryDelay = advisoryDelay;
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    @Positive
-    private int bitsUsed;
-
-    @PositiveOrZero
-    private int bitsLeft;
-
-    @PositiveOrZero
-    private int requestsLeft;
-
-    @PositiveOrZero
-    private long advisoryDelay;
 }

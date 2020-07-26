@@ -21,37 +21,78 @@ package com.github.jinahya.randomorg.api.bind.r2.basic;
  */
 
 import com.github.jinahya.randomorg.api.bind.r2.AbstractParams;
-import jakarta.validation.Valid;
+import com.github.jinahya.randomorg.api.bind.r2.Base;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.Delegate;
+
+import static java.util.Optional.ofNullable;
 
 @Setter
 @Getter
 public class GenerateIntegersParams extends AbstractParams {
 
+    // -----------------------------------------------------------------------------------------------------------------
     public static final int MIN_N = 1;
 
-    public static final int MAX_N = (int) 1.0e4;
+    public static final int MAX_N = 10000; //(int) 1.0e4;
 
-    public static final int MIN_MIN = (int) -1.0e+9;
+    // -----------------------------------------------------------------------------------------------------------------
+    public static final int MIN_MIN = -1000000000; //(int) -1.0e+9;
 
-    public static final int MAX_MIN = (int) +1.0e+9;
+    public static final int MAX_MIN = +1000000000; // (int) +1.0e+9;
 
+    // -----------------------------------------------------------------------------------------------------------------
     public static final int MIN_MAX = MIN_MIN;
 
     public static final int MAX_MAX = MAX_MIN;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    public static final String PROPERTY_NAME_BASE = "base";
+
+    public static final int MIN_BASE = 2;
+
+    public static final int MAX_BASE = 16;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @AssertTrue
+    private boolean isMinLessThanOrEqualsToMax() {
+        return min <= max;
+    }
+
+    // --------------------------------------------------------------------------------------------------------------- n
+    // ------------------------------------------------------------------------------------------------------------- min
+    // ------------------------------------------------------------------------------------------------------------- max
+    // ----------------------------------------------------------------------------------------------------- replacement
+    // ------------------------------------------------------------------------------------------------------------ base
+    public Integer getBase() {
+        return ofNullable(base).map(Base::getRadix).orElse(null);
+    }
+
+    public void setBase(final Integer base) {
+        this.base = ofNullable(base).map(Base::valueOfRadix).orElse(null);
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
     @Max(MAX_N)
     @Min(MIN_N)
     private int n = MIN_N;
 
-    @Delegate
-    @Valid
-    @NotNull
-    private final GenerateIntegersParamsUnit unit = new GenerateIntegersParamsUnit();
+    @Max(MAX_MIN)
+    @Min(MIN_MIN)
+    private int min = MIN_MIN;
+
+    @Max(MAX_MAX)
+    @Min(MIN_MAX)
+    private int max = MAX_MAX;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    private Boolean replacement;
+
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)
+    private Base base;
 }
